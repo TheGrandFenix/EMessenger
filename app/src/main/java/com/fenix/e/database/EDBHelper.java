@@ -17,33 +17,35 @@ public class EDBHelper extends SQLiteOpenHelper {
     //Database creation procedure
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE CHAT_TABLE ("
-                + "SESSION_ID INTEGER UNSIGNED NOT NULL, "
-                + "LAST_UPDATE_DT INTEGER UNSIGNED NOT NULL, "
+        db.execSQL("CREATE TABLE CHAT_TABLE ("
+                + "SESSION_ID INTEGER NOT NULL, "
+                + "LAST_UPDATE_DT INTEGER NOT NULL, "
                 + "PARTICIPANTS BLOB NOT NULL, "
                 + "PRIMARY KEY (SESSION_ID))");
 
-        db.execSQL("CREATE MESSAGE_TABLE ("
-                + "MESSAGE_ID INTEGER UNSIGNED NOT NULL, "
-                + "SESSION_ID INTEGER UNSIGNED NOT NULL, "
-                + "SENDER_ID INTEGER UNSIGNED NOT NULL, "
-                + "TIMESTAMP INTEGER UNSIGNED NOT NULL, "
+        db.execSQL("CREATE TABLE MESSAGE_TABLE ("
+                + "MESSAGE_ID INTEGER NOT NULL, "
+                + "SESSION_ID INTEGER NOT NULL, "
+                + "SENDER_ID INTEGER NOT NULL, "
+                + "TIMESTAMP INTEGER NOT NULL, "
                 + "CONTENT BLOB NOT NULL, "
                 + "PRIMARY KEY (MESSAGE_ID), "
                 + "FOREIGN KEY (SESSION_ID) REFERENCES CHAT_TABLE(SESSION_ID) ON DELETE CASCADE)");
 
-        db.execSQL("CREATE USER_TABLE ("
-                + "USER_ID INTEGER UNSIGNED NOT NULL, "
+        db.execSQL("CREATE TABLE USER_TABLE ("
+                + "USER_ID INTEGER NOT NULL, "
                 + "USERNAME TEXT NOT NULL, "
                 + "NAME TEXT NOT NULL, "
-                + "UNIQUE (USERNAME) "
+                + "UNIQUE (USERNAME),"
                 + "PRIMARY KEY (USER_ID))");
     }
 
     //Database upgrade procedure
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS CHAT_TABLE, MESSAGE_TABLE, USER_TABLE");
+        db.execSQL("DROP TABLE IF EXISTS CHAT_TABLE");
+        db.execSQL("DROP TABLE IF EXISTS MESSAGE_TABLE");
+        db.execSQL("DROP TABLE IF EXISTS USER_TABLE");
         onCreate(db);
     }
 }
