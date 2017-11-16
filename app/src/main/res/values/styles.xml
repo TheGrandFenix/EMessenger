@@ -1,0 +1,20 @@
+<resources>
+
+    <style name="Enigma" parent="android:Theme.Material.Light" >
+        <item name="android:textColorPrimary">@color/colorEnigmatic</item>
+        <item name="android:colorAccent">@color/colorEnigmatic</item>
+        <item name="android:statusBarColor">@color/colorEnigmatic</item>
+        <item name="android:navigationBarColor">@color/colorEnigmatic</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
+    </style>
+
+    <style name="Enigma.Fullscreen" parent="@style/Enigma">
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
+    <style name="Enigma.Fullscreen.Loading" parent="@style/Enigma">
+        <item name="android:colorBackground">@color/colorEnigmatic</item>
+    </style>
+
+</resources>

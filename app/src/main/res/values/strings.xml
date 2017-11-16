@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">E</string>
+    <string name="login_app_logo_description">App Logo Image</string>
+    <string name="sign_up_btn_text">SIGN UP</string>
+    <string name="log_in_btn_text">LOG IN</string>
+    <string name="password_field_hint">Password</string>
+    <string name="username_field_hint">Username</string>
+    <string name="display_name_text_hint">Choose a display name:</string>
+    <string name="complete_signup_btn_text">Complete Signup</string>
+</resources>
