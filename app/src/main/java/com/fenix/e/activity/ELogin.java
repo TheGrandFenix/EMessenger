@@ -13,8 +13,9 @@ import android.view.View;
 import android.widget.ProgressBar;
 
 import com.fenix.e.R;
-import com.fenix.e.extra.E;
 import com.fenix.e.extra.LoginPagerAdapter;
+
+import static com.fenix.e.extra.E.*;
 
 
 public class ELogin extends FragmentActivity {
@@ -83,12 +84,12 @@ public class ELogin extends FragmentActivity {
             @Override
             public void onReceive(Context context, Intent intent) {
                 String action = intent.getAction();
-                switch (action) {
-                    case E.COMPLETED_LOGIN:
+                if (action != null) switch (action) {
+                    case COMPLETED_LOGIN:
                         handleSuccessfulLogin();
                         break;
 
-                    case E.FAILED_LOGIN:
+                    case FAILED_LOGIN:
                         handleFailedLogin();
                         break;
                 }
@@ -97,8 +98,8 @@ public class ELogin extends FragmentActivity {
 
         //Listen for login completion status
         IntentFilter broadcastFilter = new IntentFilter();
-        broadcastFilter.addAction(E.COMPLETED_LOGIN);
-        broadcastFilter.addAction(E.FAILED_LOGIN);
+        broadcastFilter.addAction(COMPLETED_LOGIN);
+        broadcastFilter.addAction(FAILED_LOGIN);
 
         //Register local broadcast receiver
         LocalBroadcastManager.getInstance(this).registerReceiver(broadcastReceiver, broadcastFilter);
@@ -124,9 +125,9 @@ public class ELogin extends FragmentActivity {
     //Login procedure called from BaseLoginFragment
     public void requestLogin(String username, String password) {
         startLoading();
-        Intent loginRequest = new Intent(E.REQUEST_LOGIN);
-        loginRequest.putExtra(E.BUNDLE_USERNAME, username);
-        loginRequest.putExtra(E.BUNDLE_PASSWORD, password);
+        Intent loginRequest = new Intent(REQUEST_LOGIN);
+        loginRequest.putExtra(BUNDLE_USERNAME, username);
+        loginRequest.putExtra(BUNDLE_PASSWORD, password);
         LocalBroadcastManager.getInstance(this).sendBroadcast(loginRequest);
     }
 
@@ -142,10 +143,10 @@ public class ELogin extends FragmentActivity {
 
     public void requestSignup(String displayName) {
         startLoading();
-        Intent loginRequest = new Intent(E.REQUEST_SIGNUP);
-        loginRequest.putExtra(E.BUNDLE_USERNAME, username);
-        loginRequest.putExtra(E.BUNDLE_PASSWORD, password);
-        loginRequest.putExtra(E.BUNDLE_DISPLAY_NAME, displayName);
+        Intent loginRequest = new Intent(REQUEST_SIGNUP);
+        loginRequest.putExtra(BUNDLE_USERNAME, username);
+        loginRequest.putExtra(BUNDLE_PASSWORD, password);
+        loginRequest.putExtra(BUNDLE_DISPLAY_NAME, displayName);
         LocalBroadcastManager.getInstance(this).sendBroadcast(loginRequest);
     }
 

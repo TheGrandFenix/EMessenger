@@ -16,6 +16,8 @@ import android.util.Log;
 
 import com.fenix.e.extra.E;
 
+import static com.fenix.e.extra.E.*;
+
 
 public class ENetworkService extends Service {
 
@@ -109,9 +111,9 @@ public class ENetworkService extends Service {
         IntentFilter broadcastFilter = new IntentFilter();
 
         //Actions to listen for
-        broadcastFilter.addAction(E.REQUEST_LOGIN);
-        broadcastFilter.addAction(E.REQUEST_SIGNUP);
-        broadcastFilter.addAction(E.SEND_MESSAGE);
+        broadcastFilter.addAction(REQUEST_LOGIN);
+        broadcastFilter.addAction(REQUEST_SIGNUP);
+        broadcastFilter.addAction(SEND_MESSAGE);
 
         return broadcastFilter;
     }
@@ -122,17 +124,17 @@ public class ENetworkService extends Service {
             @Override
             public void onReceive(Context context, Intent intent) {
                 switch(intent.getAction()){
-                    case E.REQUEST_LOGIN:
+                    case REQUEST_LOGIN:
                         Log.d(TAG, "Received login request.");
                         processLoginRequest(intent);
                         break;
 
-                    case E.REQUEST_SIGNUP:
+                    case REQUEST_SIGNUP:
                         Log.d(TAG, "Received signup request.");
                         processSignupRequest(intent);
                         break;
 
-                    case  E.SEND_MESSAGE:
+                    case  SEND_MESSAGE:
                         Log.d(TAG, "Received request to send a message.");
                         processMessageSendRequest(intent);
                         break;
@@ -158,8 +160,8 @@ public class ENetworkService extends Service {
 
     private void processLoginRequest(Intent loginIntent) {
         Bundle loginData = loginIntent.getExtras();
-        String username = loginData.getString(E.BUNDLE_USERNAME, null);
-        String password = loginData.getString(E.BUNDLE_PASSWORD, null);
+        String username = loginData.getString(BUNDLE_USERNAME, null);
+        String password = loginData.getString(BUNDLE_PASSWORD, null);
         Log.d(TAG, "Processing login request " +
                 "for user [" + username + "] " +
                 "with password [" + password + "] " +
@@ -168,15 +170,16 @@ public class ENetworkService extends Service {
 
     private void processSignupRequest(Intent signupIntent) {
         Bundle signupData = signupIntent.getExtras();
-        String username = signupData.getString(E.BUNDLE_USERNAME, null);
-        String password = signupData.getString(E.BUNDLE_PASSWORD, null);
-        String displayName = signupData.getString(E.BUNDLE_DISPLAY_NAME, null);
-        Log.d(TAG, "Processing signup request " +
-                "for user [" + username + "] " +
-                "with password [" + password + "] " +
-                "and the display name [" + displayName + "] " +
-                "from background service.");
-
+        if (signupData != null) {
+            String username = signupData.getString(BUNDLE_USERNAME, null);
+            String password = signupData.getString(BUNDLE_PASSWORD, null);
+            String displayName = signupData.getString(BUNDLE_DISPLAY_NAME, null);
+            Log.d(TAG, "Processing signup request " +
+                    "for user [" + username + "] " +
+                    "with password [" + password + "] " +
+                    "and the display name [" + displayName + "] " +
+                    "from background service.");
+        }
     }
 
     private void processMessageSendRequest(Intent messageIntent) {
